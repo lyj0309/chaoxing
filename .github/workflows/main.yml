@@ -61,8 +61,8 @@ jobs:
       - name: Upload to oci
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          cat ${{ secrets.OCI_CONFIG }} > config
-          cat ${{ secrets.OCI_KEY }} > key
+          echo "${{ secrets.OCI_CONFIG }}" > config
+          echo "${{ secrets.OCI_KEY }}" > key
           python3 -m venv oracle-cli
           source oracle-cli/bin/activate
           pip install oci-cli
