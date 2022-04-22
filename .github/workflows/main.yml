@@ -64,7 +64,6 @@ jobs:
           mkdir /home/runner/.oci
           echo "${{ secrets.OCI_CONFIG }}" > /home/runner/.oci/config
           echo "${{ secrets.OCI_KEY }}" >  /home/runner/.oci/key
-          pip3 install venv
           python3 -m venv oracle-cli
           source oracle-cli/bin/activate
           pip3 install oci-cli
