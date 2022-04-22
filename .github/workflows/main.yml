@@ -41,6 +41,7 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+
       - name: Build win bin
         run: pyinstaller -F main.py -n  'chaoxing-${{github.ref_name}}-${{ matrix.name }}'
 
@@ -56,6 +57,21 @@ jobs:
           files: 'dist/chaoxing*'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to oci
+        run: |
+          cat {{ secrets.OCI_CONFIG }} > config
+          cat {{ secrets.key }} > key
+          python3 -m venv oracle-cli
+          source oracle-cli/bin/activate
+          pip install oci-cli
+          oci --version
+          oci os object put \
+          --file ./dist/chaoxing-${{github.ref_name}}-${{ matrix.name }} \
+          --bucket-name bucket \ 
+          --config-file ./config --profile ./key --auth security_token
+            
+          
 
       - uses: actions/upload-artifact@v3
         with:
