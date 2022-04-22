@@ -70,7 +70,7 @@ jobs:
           oci --version
           oci os object put \
           --file ./dist/chaoxing-${{github.ref_name}}-${{ matrix.name }} \
-          --bucket-name bucket \ 
+          --bucket-name bucket 
             
           
 
